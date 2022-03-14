@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-tour-of-heroes';
+  title = 'Tour of Heroes';
+
+
+  form = new FormGroup({
+    temp1: new FormControl(false, Validators.required),
+    temp2: new FormControl(null, Validators.required),
+    temp3: new FormControl(true, Validators.required)
+  })
+
 }
