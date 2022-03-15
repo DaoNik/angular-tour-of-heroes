@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
+import { FenceCasePipe } from './fence-case.pipe';
+import { HeroFormModule } from './hero-form/hero-form.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    FenceCasePipe
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+    HeroFormModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

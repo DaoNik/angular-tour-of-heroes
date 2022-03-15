@@ -1,0 +1,13 @@
+<form class='form'>
+  <h2 class='form__title'>Create Account</h2>
+  <p class='form__subtitle'>Create a free salmanwap account to access
+    all articles and videos.</p>
+  <label matInput class='form__label' for='username'>Username</label>
+  <input class='form__input' type='text' name='name' id='username' [formControl]="userFormControl"
+  placeholder="shambhavim1999">
+  <mat-hint class='form__hint'>Must not contain any special character</mat-hint>
+  <label class='form__label' for='password'>Password</label>
+  <input class='form__input' type='password' name='password' id='password' [formControl]='passFormControl'>
+  <mat-hint class='form__hint'>Must have atleast 8+ characters</mat-hint>
+  <button class='form__submit' type='submit'>Create a free account</button>
+</form>
