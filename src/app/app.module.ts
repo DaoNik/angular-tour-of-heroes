@@ -17,6 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { FenceCasePipe } from './fence-case.pipe';
 import { HeroFormModule } from './hero-form/hero-form.module';
+import { FocusComponent } from './focus/focus.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HeroFormModule } from './hero-form/hero-form.module';
     MessagesComponent,
     DashboardComponent,
     HeroSearchComponent,
-    FenceCasePipe
+    FenceCasePipe,
+    FocusComponent
   ],
   imports: [
     BrowserModule,
