@@ -7,7 +7,7 @@
 }
 
 .pagination__list {
-  padding: none;
+  padding: 0;
   list-style: none;
   display: flex;
   gap: 4px;
@@ -15,8 +15,20 @@
 }
 
 .pagination__list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 28px;
   height: 28px;
+}
+
+.pagination__list-item_active {
+  background-color: #8f07cf;
+  border-radius: 50%;
+
+  .pagination__link {
+    color: white;
+  }
 }
 
 .pagination__link {
