@@ -18,6 +18,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { FenceCasePipe } from './fence-case.pipe';
 import { HeroFormModule } from './hero-form/hero-form.module';
 import { FocusComponent } from './focus/focus.component';
+import { BookModule } from './book/book.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FocusComponent } from './focus/focus.component';
       InMemoryDataService, { dataEncapsulation: false }
     ),
     HeroFormModule,
+    BookModule
   ],
   providers: [],
   bootstrap: [AppComponent]
