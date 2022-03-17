@@ -1,0 +1,25 @@
+.pagination {
+  height: 184px;
+  box-sizing: border-box;
+  margin: 27px auto 24px;
+  max-width: 843px;
+  width: 100%;
+}
+
+.pagination__list {
+  padding: none;
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.pagination__list-item {
+  width: 28px;
+  height: 28px;
+}
+
+.pagination__link {
+  text-decoration: none;
+  color: black;
+}
