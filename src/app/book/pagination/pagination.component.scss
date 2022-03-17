@@ -14,29 +14,28 @@
   justify-content: center;
 }
 
-.pagination__list-item {
+.pagination__link {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: black;
   width: 28px;
   height: 28px;
 }
 
-.pagination__list-item:hover {
+.pagination__link:hover {
   background-color: #f2f2f2;
   border-radius: 50%;
 }
 
-.pagination__list-item_active {
+.pagination__link_active {
   background-color: #8f07cf;
   border-radius: 50%;
-
-  .pagination__link {
-    color: white;
-  }
+  color: white;
 }
 
-.pagination__link {
-  text-decoration: none;
-  color: black;
+.pagination__link_active:hover {
+  background-color: #8f07cf;
+  opacity: 0.7;
 }
