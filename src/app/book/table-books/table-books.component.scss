@@ -1,0 +1,31 @@
+.table__container {
+  width: 100%;
+  min-width: 320px;
+  display: flex;
+  gap: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .table__container {
+    flex-wrap: wrap;
+  }
+}
+
+.table {
+  margin-top: 24px;
+  width: 100%;
+  max-width: 480px;
+  min-width: 320px;
+}
+
+.table__row {
+  cursor: pointer;
+}
+
+.table__description {
+  max-width: 480px;
+}
+
+.table__column {
+  padding: 5px;
+}

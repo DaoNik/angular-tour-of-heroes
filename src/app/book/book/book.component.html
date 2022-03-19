@@ -1,6 +1,11 @@
 <div class='book-container'>
   <app-header></app-header>
-  <router-outlet></router-outlet>
-  <app-pagination></app-pagination>
+  <main class='main-container'>
+    <app-table-books></app-table-books>
+    <div>
+      <router-outlet></router-outlet>
+      <app-pagination></app-pagination>
+    </div>
+  </main>
 </div>
 

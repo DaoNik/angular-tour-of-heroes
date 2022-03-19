@@ -5,7 +5,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { FocusComponent } from './focus/focus.component';
 import { HeroFormComponent } from './hero-form/hero-form/hero-form.component';
-import { BookComponent } from './book/book/book.component';
+import { bookRoutes } from './book/book-routing.module';
+
 
 const routes: Routes = [
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -14,7 +15,7 @@ const routes: Routes = [
   {path: 'detail/:id', component: HeroDetailComponent},
   {path: 'focus', component: FocusComponent},
   {path: 'form', component: HeroFormComponent},
-  {path: 'book', component: BookComponent}
+  {path: 'book', children: [...bookRoutes]}
 ]
 
 @NgModule({

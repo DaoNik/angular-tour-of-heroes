@@ -1,7 +1,16 @@
 .book-container {
+  width: 100%;
+  min-width: 320px;
   font-family: "Segoe UI", sans-serif;
 }
 
 .book-container * {
   font-family: "Segoe UI", sans-serif;
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
