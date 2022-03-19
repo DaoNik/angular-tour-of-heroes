@@ -10,14 +10,14 @@
     <!-- Title Column -->
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef> Title </th>
-      <td mat-cell class='table__column' *matCellDef="let book"> {{book.title}}
-        <!-- <mat-card *ngIf='clickedRow && clickedRow.id === book.id'>
-          <mat-card-title>{{clickedRow.title}}</mat-card-title>
+      <td mat-cell class='table__column' *matCellDef="let book">
+        {{book.title}}
+        <mat-card *ngIf='clickedRow && clickedRow.id === book.id'>
           <mat-card-subtitle>{{clickedRow.releaseDate}}</mat-card-subtitle>
           <mat-card-content>
             {{clickedRow.description}}
           </mat-card-content>
-        </mat-card> -->
+        </mat-card>
       </td>
       <td mat-cell class='table__column' *matCellDef="let book"> {{book.title}} </td>
       <td mat-footer-cell *matFooterCellDef></td>
@@ -42,13 +42,15 @@
     </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
     <tr
       mat-row
+      hideToggle
       class='table__row'
       (click)='clickedRow = row'
       *matRowDef="let row; columns: displayedColumns;"
-    >
-    </tr>
+    ></tr>
+
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
   </table>
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { BookRoutingModule } from './book-routing.module';
 import { HeaderComponent } from './header/header.component';
@@ -31,7 +32,8 @@ import { TableBooksComponent } from './table-books/table-books.component';
     CommonModule,
     BookRoutingModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule
   ],
 })
 export class BookModule { }
