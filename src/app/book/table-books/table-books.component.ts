@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { BooksService } from '../books.service';
 import { bookSet1, bookSet2, newBookSet } from '../books';
@@ -7,7 +8,14 @@ import { bookSet1, bookSet2, newBookSet } from '../books';
 @Component({
   selector: 'app-table-books',
   templateUrl: './table-books.component.html',
-  styleUrls: ['./table-books.component.scss']
+  styleUrls: ['./table-books.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class TableBooksComponent implements OnInit {
   newSetBooks: newBookSet[] = [];
@@ -15,6 +23,7 @@ export class TableBooksComponent implements OnInit {
   clickedRow?: newBookSet;
   set1: bookSet1[] = [];
   set2: bookSet2[] = [];
+  expandedElement: newBookSet | null = null;
 
   constructor(private booksService: BooksService) { }
 
@@ -38,6 +47,24 @@ export class TableBooksComponent implements OnInit {
         return newSetBooks;
       })
     ).subscribe(books => this.newSetBooks = books)
+  }
+
+  getHeaderContent(column: string) {
+    if (column === 'id') {
+      return 'Id';
+    } else if (column === 'qtyRelease') {
+      return 'Тираж шт.';
+    }
+    return 'Название';
+  }
+
+  getFooterContent(column: string) {
+    if (column === 'id') {
+      return 'Итого продано'
+    } else if (column === 'qtyRelease') {
+      return this.getTotal();
+    }
+    return '';
   }
 
   getTotal(): number {

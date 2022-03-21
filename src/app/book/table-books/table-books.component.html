@@ -1,73 +1,36 @@
 <div class='table__container'>
-  <table mat-table [dataSource]="newSetBooks" class="table mat-elevation-z8">
-    <!-- Item Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let book"> {{book.id}} </td>
-      <td mat-footer-cell *matFooterCellDef> Итого продано </td>
+  <table mat-table [dataSource]="newSetBooks" multiTemplateDataRows class="table mat-elevation-z8">
+    <ng-container matColumnDef="{{column}}" *ngFor='let column of displayedColumns'>
+      <th mat-header-cell *matHeaderCellDef>
+        {{getHeaderContent(column)}}
+      </th>
+      <td mat-cell *matCellDef='let element'>{{element[column]}}</td>
+      <td mat-footer-cell *matFooterCellDef>{{
+        getFooterContent(column)
+      }}</td>
     </ng-container>
 
-    <!-- Title Column -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef> Название </th>
-      <td mat-cell class='table__column' *matCellDef="let book">
-        {{book.title}}
-        <mat-card class='table__card' *ngIf='clickedRow && clickedRow.id === book.id'>
-          <mat-card-subtitle>{{clickedRow.releaseDate}}</mat-card-subtitle>
-          <mat-card-content>
-            {{clickedRow.description}}
-          </mat-card-content>
-        </mat-card>
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="example-element-detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+             <mat-card class='example-element-description'>
+              <mat-card-subtitle>{{element.releaseDate}}</mat-card-subtitle>
+              <mat-card-content>
+                {{element.description}}
+              </mat-card-content>
+            </mat-card>
+        </div>
       </td>
-      <td mat-cell class='table__column' *matCellDef="let book"> {{book.title}} </td>
-      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
-    <!-- Quantity Column -->
-    <ng-container matColumnDef="qtyRelease">
-      <th mat-header-cell *matHeaderCellDef> Тираж шт. </th>
-      <td mat-cell *matCellDef="let book"> {{book.qtyRelease}} </td>
-      <td mat-footer-cell *matFooterCellDef> {{getTotal()}} </td>
-    </ng-container>
-
-    <!-- Description Column -->
-    <!-- <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Описание </th>
-      <td mat-cell *matCellDef="let book">
-        <mat-card *ngIf='clickedRow && clickedRow.id === book.id'>
-            {{clickedRow.description}}
-        </mat-card>
-      </td>
-      <td mat-footer-cell *matFooterCellDef> {{getTotal()}} </td>
-    </ng-container> -->
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-    <tr
-      mat-row
-      hideToggle
-      class='table__row'
-      (click)='clickedRow = row'
-      *matRowDef="let row; columns: displayedColumns;"
-    ></tr>
-
+    <tr mat-header-row *matHeaderRowDef='displayedColumns'></tr>
+    <tr mat-row *matRowDef='let element; columns: displayedColumns;'
+    class='example-element-row'
+    [class.example-expanded-row]='expandedElement === element'
+    (click)='expandedElement = expandedElement === element ? null : element'></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
   </table>
-
-  <div class='table__description'>
-    <h3>
-      Описание книги
-    </h3>
-    <div *ngIf="!clickedRow">
-      Вы пока что не выбрали книгу, для этого нажмите на интересную вам книгу
-    </div>
-    <mat-card *ngIf='clickedRow'>
-      <mat-card-title>{{clickedRow.title}}</mat-card-title>
-      <mat-card-subtitle>Дата релиза: {{clickedRow.releaseDate}}</mat-card-subtitle>
-      <mat-card-subtitle>Тираж шт.: {{clickedRow.qtyRelease}}</mat-card-subtitle>
-      <mat-card-content>
-        {{clickedRow.description}}
-      </mat-card-content>
-    </mat-card>
-  </div>
 </div>
+
