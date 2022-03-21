@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FenceCasePipe implements PipeTransform {
 
 
-  transform(value: string, ...args: unknown[]): string {
+  transform(value: string): string {
     let newValue = '';
     let isUpper = false;
     for (let i = 0; i < value.length; i++) {
@@ -18,17 +18,6 @@ export class FenceCasePipe implements PipeTransform {
       isUpper = !isUpper;
     }
     return newValue;
-
-    // return value
-    //   .split(' ')
-    //   .map((word) => {
-    //     let newWord = ''
-    //     for (let i = 0; i < word.length; i++) {
-    //       newWord += i % 2 === 0 ? word[i].toUpperCase() : word[i]
-    //     }
-    //     return newWord;
-    //   })
-    //   .join(' ');
   }
 
 }
