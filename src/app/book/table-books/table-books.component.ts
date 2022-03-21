@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { BooksService } from '../books.service';
-import { newBookSet } from '../books';
+import { bookSet1, bookSet2, newBookSet } from '../books';
 
 @Component({
   selector: 'app-table-books',
@@ -12,25 +12,25 @@ import { newBookSet } from '../books';
 export class TableBooksComponent implements OnInit {
   newSetBooks: newBookSet[] = [];
   displayedColumns: string[] = ['id', 'title', 'qtyRelease'];
-  dataSource = this.newSetBooks;
   clickedRow?: newBookSet;
+  set1: bookSet1[] = [];
+  set2: bookSet2[] = [];
 
   constructor(private booksService: BooksService) { }
 
   getBooks(): void {
-    this.booksService.getBooks().pipe(
-      map(books => {
-        const set1 = books.set1.data;
-        const set2 = books.set2.data;
-        return ({set1, set2});
-      }),
-      map(({set1, set2}) => {
-        const newSetBooks: newBookSet[] = []
-        for (let i = 0; i < set1.length; i++) {
+    this.booksService.getSet1().pipe(
+      map(dataSet1 => dataSet1.set1.data)
+    ).subscribe(set1 => this.set1 = set1)
+    this.booksService.getSet2().pipe(
+      map(dataSet2 => dataSet2.set2.data),
+      map(set2 => {
+        const newSetBooks: newBookSet[] = [];
+        for (let i = 0; i < set2.length; i++) {
           newSetBooks[i] = {
-            id: set1[i].id,
-            title: set1[i].title,
-            description: set1[i].description,
+            id: this.set1[i].id,
+            title: this.set1[i].title,
+            description: this.set1[i].description,
             releaseDate: set2[i].releaseDate,
             qtyRelease: set2[i].qtyRelease
           }
@@ -44,10 +44,6 @@ export class TableBooksComponent implements OnInit {
     return this.newSetBooks.map(book => book.qtyRelease).reduce((acc, value) => {
       return acc + value;
     }, 0)
-  }
-
-  descriptionShow() {
-
   }
 
   ngOnInit(): void {

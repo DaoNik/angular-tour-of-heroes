@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
-import {Books, bookSet1} from './books';
+import {bookDataSet1, bookDataSet2} from './books';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BooksService {
-  private booksUrl = 'api/books';
+  private set1Url = 'api/set1';
+  private set2Url = 'ape/set2';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -19,20 +20,20 @@ export class BooksService {
 
   constructor(private http: HttpClient) { }
 
-  getBooks(): Observable<Books> {
-    return this.http.get<Books>(this.booksUrl)
+  getSet1(): Observable<bookDataSet1> {
+    return this.http.get<bookDataSet1>(this.set1Url)
       .pipe(
-        tap(_ => console.log('fetched book')),
-        // catchError(this.handleError<Books>('getBooks', {}))
+        tap(_ => console.log('fetched set1')),
+        // catchError(this.handleError<bookDataSet1>('getSet1', {}))
       )
   }
 
-  getBook(id: number): Observable<bookSet1> {
-    const url = `${this.booksUrl}/set2/data/${id}`;
-    return this.http.get<bookSet1>(url).pipe(
-      tap(_ => console.log(`fetched book id=${id}`)),
-      catchError(this.handleError<bookSet1>(`getBook id=${id}`))
-    )
+  getSet2(): Observable<bookDataSet2> {
+    return this.http.get<bookDataSet2>(this.set2Url)
+      .pipe(
+        tap(_ => console.log('fetched set2')),
+        // catchError(this.handleError<bookDataSet2>('getSet1', {}))
+      )
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -18,8 +18,13 @@
   min-width: 320px;
 }
 
+.table__card {
+  width: 100%;
+}
+
 .table__row {
   cursor: pointer;
+  vertical-align: top;
 }
 
 .table__description {

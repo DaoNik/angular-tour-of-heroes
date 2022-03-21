@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Directive, Injectable, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
-import { merge, defer, distinct, distinctUntilChanged, fromEvent, Observable, of, map } from 'rxjs';
+import { Component, Directive, Injectable, Inject, ElementRef } from '@angular/core';
+import { merge, defer, distinctUntilChanged, fromEvent, Observable, of, map } from 'rxjs';
 
 @Directive({selector: '.focus'})
 export class ChildDirective {
