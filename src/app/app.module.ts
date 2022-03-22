@@ -19,6 +19,10 @@ import { FenceCasePipe } from './fence-case.pipe';
 import { HeroFormModule } from './hero-form/hero-form.module';
 import { FocusComponent } from './focus/focus.component';
 import { BookModule } from './book/book.module';
+import { HelloDirective } from './directives/hello.directive';
+import { TextModificatorDirective } from './directives/text-modificator.directive';
+import { TextModificatorHostDirective } from './directives/text-modificator-host.directive';
+import { RainbowTextDirective } from './directives/rainbow-text.directive';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { BookModule } from './book/book.module';
     DashboardComponent,
     HeroSearchComponent,
     FenceCasePipe,
-    FocusComponent
+    FocusComponent,
+    HelloDirective,
+    TextModificatorDirective,
+    TextModificatorHostDirective,
+    RainbowTextDirective
   ],
   imports: [
     BrowserModule,
