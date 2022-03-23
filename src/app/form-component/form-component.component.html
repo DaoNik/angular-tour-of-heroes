@@ -17,7 +17,7 @@
 </mat-form-field>
 <mat-form-field class="example-chip-list" appearance="fill">
   <mat-label>Ваши навыки</mat-label>
-  <mat-chip-list #chipList aria-label="Skill selection">
+  <mat-chip-list formControlName="skillControl" #chipList aria-label="Skill selection">
     <mat-chip
       *ngFor="let skill of skills"
       (removed)="remove(skill)">
@@ -29,7 +29,6 @@
     <input
       placeholder="Новый навык..."
       #skillInput
-      formControlName="skillControl"
       [formControl]="skillCtrl"
       [matAutocomplete]="auto"
       [matChipInputFor]="chipList"

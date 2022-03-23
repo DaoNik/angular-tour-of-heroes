@@ -14,7 +14,7 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class FormComponentComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  skillCtrl = new FormControl();
+  skillCtrl = new FormControl('', [Validators.pattern('[а-яёА-ЯЁ -]*')]);
   filteredSkills: Observable<string[]>;
   skills: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект'];
   allSkills: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект', 'Гуглеж', 'Коммуникативность', 'Упорство'];
@@ -24,11 +24,11 @@ export class FormComponentComponent {
     lastNameControl: new FormControl('', [Validators.required, Validators.pattern('[а-яёА-ЯЁ -]*')]),
     specialNameControl: new FormControl('', [Validators.pattern('[а-яёА-ЯЁ -]*')]),
     emailControl: new FormControl('', [Validators.email]),
-    skillControl: new FormControl('', Validators.pattern('[а-яёА-ЯЁ -]*'))
+    skillControl: new FormControl(this.skills)
   })
 
   skillField: string = '';
-  formValues: object = {};
+  formValues: object | undefined;
 
   @ViewChild('skillInput')
   skillInput!: ElementRef<HTMLInputElement>;
@@ -41,6 +41,11 @@ export class FormComponentComponent {
   }
 
   submitForm() {
+    console.log(this.skills);
+    this.myForm.setValue({
+      skillControl: [...this.skills],
+      ...this.myForm.value
+    })
     this.formValues = this.myForm.value;
     console.log(this.myForm)
   }
