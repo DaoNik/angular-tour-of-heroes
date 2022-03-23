@@ -1,0 +1,24 @@
+.form-component__form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 20px auto;
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+.myFormValue {
+  margin-top: 20px;
+}
+
+.form-component__btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.form-component__btn {
+  width: 20%;
+}

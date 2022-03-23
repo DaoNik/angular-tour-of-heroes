@@ -6,6 +6,7 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { FocusComponent } from './focus/focus.component';
 import { HeroFormComponent } from './hero-form/hero-form/hero-form.component';
 import { bookRoutes } from './book/book-routing.module';
+import { FormComponentComponent } from './form-component/form-component.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,9 @@ const routes: Routes = [
   {path: 'detail/:id', component: HeroDetailComponent},
   {path: 'focus', component: FocusComponent},
   {path: 'form', component: HeroFormComponent},
-  {path: 'book', children: [...bookRoutes]}
+  {path: 'book', children: [...bookRoutes]},
+  {path: 'form-component',
+  component: FormComponentComponent}
 ]
 
 @NgModule({

@@ -6,6 +6,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -23,6 +28,7 @@ import { HelloDirective } from './directives/hello.directive';
 import { TextModificatorDirective } from './directives/text-modificator.directive';
 import { TextModificatorHostDirective } from './directives/text-modificator-host.directive';
 import { RainbowTextDirective } from './directives/rainbow-text.directive';
+import { FormComponentComponent } from './form-component/form-component.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +43,8 @@ import { RainbowTextDirective } from './directives/rainbow-text.directive';
     HelloDirective,
     TextModificatorDirective,
     TextModificatorHostDirective,
-    RainbowTextDirective
+    RainbowTextDirective,
+    FormComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,12 @@ import { RainbowTextDirective } from './directives/rainbow-text.directive';
       InMemoryDataService, { dataEncapsulation: false }
     ),
     HeroFormModule,
-    BookModule
+    BookModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    MatIconModule,
+    MatInputModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,52 @@
+<form [formGroup]='myForm' (submit)="submitForm()" class='form-component__form'>
+<mat-form-field appearance="fill">
+  <mat-label>Фамилия</mat-label>
+  <input matInput formControlName='firstNameControl' pattern='[а-яёА-ЯЁ -]*'>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Имя</mat-label>
+  <input matInput formControlName='lastNameControl' pattern='[а-яёА-ЯЁ -]*'>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Отчество</mat-label>
+  <input matInput formControlName='specialNameControl' pattern='[а-яёА-ЯЁ -]*'>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Email</mat-label>
+  <input matInput formControlName='emailControl'>
+</mat-form-field>
+<mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>Ваши навыки</mat-label>
+  <mat-chip-list #chipList aria-label="Skill selection">
+    <mat-chip
+      *ngFor="let skill of skills"
+      (removed)="remove(skill)">
+      {{skill}}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+    <input
+      placeholder="Новый навык..."
+      #skillInput
+      formControlName="skillControl"
+      [formControl]="skillCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)" pattern='[а-яёА-ЯЁ -]*'>
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+      {{skill}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<div class='form-component__btn-container'>
+<button class='form-component__btn'  [disabled]='myForm.invalid' type='submit' mat-raised-button>Отправить</button>
+<button class='form-component__btn' type='button' color='warn' mat-raised-button (click)='clearForm()'>Сброс</button>
+</div>
+</form>
+<div class='myFormValue'>
+  {{this.formValues | json}}
+</div>
