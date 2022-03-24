@@ -1,6 +1,6 @@
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {COMMA, ENTER, N} from '@angular/cdk/keycodes';
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable} from 'rxjs';
@@ -16,7 +16,8 @@ export class FormComponentComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   skillCtrl = new FormControl('', [Validators.pattern('[а-яёА-ЯЁ -]*')]);
   filteredSkills: Observable<string[]>;
-  skills: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект'];
+  example: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект'];
+  skills: FormControl[] = [new FormControl('Жизнерадостность'), new FormControl('Заинтересованность'), new FormControl('Интеллект')];
   allSkills: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект', 'Гуглеж', 'Коммуникативность', 'Упорство'];
 
   myForm: FormGroup = new FormGroup({
@@ -24,8 +25,12 @@ export class FormComponentComponent {
     lastNameControl: new FormControl('', [Validators.required, Validators.pattern('[а-яёА-ЯЁ -]*')]),
     specialNameControl: new FormControl('', [Validators.pattern('[а-яёА-ЯЁ -]*')]),
     emailControl: new FormControl('', [Validators.email]),
-    skillControl: new FormControl(this.skills)
+    skillControl: new FormArray(this.skills)
   })
+
+  get newSkills() {
+    return this.myForm.get('skillControl') as FormArray;
+  }
 
   skillField: string = '';
   formValues: object | undefined;
@@ -33,7 +38,7 @@ export class FormComponentComponent {
   @ViewChild('skillInput')
   skillInput!: ElementRef<HTMLInputElement>;
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
     this.filteredSkills = this.skillCtrl.valueChanges.pipe(
       startWith(null),
       map((skill: string | null) => (skill ? this._filter(skill) : this.allSkills.slice())),
@@ -41,21 +46,15 @@ export class FormComponentComponent {
   }
 
   submitForm() {
-    console.log(this.skills);
-    this.myForm.setValue({
-      skillControl: [...this.skills],
-      ...this.myForm.value
-    })
     this.formValues = this.myForm.value;
-    console.log(this.myForm)
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our fruit
+    // Add our skill
     if (value) {
-      this.skills.push(value);
+      this.newSkills.push(this.fb.control(value))
     }
 
     // Clear the input value
@@ -64,16 +63,13 @@ export class FormComponentComponent {
     this.skillCtrl.setValue(null);
   }
 
-  remove(skill: string): void {
-    const index = this.skills.indexOf(skill);
-
-    if (index >= 0) {
-      this.skills.splice(index, 1);
-    }
+  remove(index: number): void {
+    this.newSkills.removeAt(index);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.skills.push(event.option.viewValue);
+    console.log(event.option.viewValue);
+    this.newSkills.push(this.fb.control(event.option.viewValue))
     this.skillInput.nativeElement.value = '';
     this.skillCtrl.setValue(null);
   }
@@ -86,7 +82,13 @@ export class FormComponentComponent {
 
   clearForm() {
     this.myForm.reset()
-    this.skills = ['Жизнерадостность', 'Заинтересованность', 'Интеллект'];
+    this.newSkills.controls.splice(3);
+
+    while (this.newSkills.controls.length < 3) {
+      this.newSkills.push(this.fb.control(''));
+    }
+    this.newSkills.patchValue(this.example);
+
     this.skillInput.nativeElement.value = '';
   }
 }

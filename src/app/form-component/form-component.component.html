@@ -17,10 +17,10 @@
 </mat-form-field>
 <mat-form-field class="example-chip-list" appearance="fill">
   <mat-label>Ваши навыки</mat-label>
-  <mat-chip-list formControlName="skillControl" #chipList aria-label="Skill selection">
+  <mat-chip-list #chipList aria-label="Skill selection">
     <mat-chip
-      *ngFor="let skill of skills"
-      (removed)="remove(skill)">
+      *ngFor="let skill of this.newSkills.value; let index = index;"
+      (removed)="remove(index)">
       {{skill}}
       <button matChipRemove>
         <mat-icon>cancel</mat-icon>
