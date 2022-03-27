@@ -4,6 +4,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
 
 import { BookRoutingModule } from './book-routing.module';
 import { HeaderComponent } from './header/header.component';
@@ -15,7 +16,8 @@ import { BookPage3Component } from './book-page3/book-page3.component';
 import { BookPage4Component } from './book-page4/book-page4.component';
 import { BookPage5Component } from './book-page5/book-page5.component';
 import { TableBooksComponent } from './table-books/table-books.component';
-import { BookChartComponent, DialogContent } from './book-chart/book-chart.component';
+import { BookDialogComponent, DialogContent } from './table-books/book-dialog/book-dialog.component';
+import { BookChartComponent } from './table-books/book-chart/book-chart.component';
 
 
 @NgModule({
@@ -29,8 +31,9 @@ import { BookChartComponent, DialogContent } from './book-chart/book-chart.compo
     BookPage4Component,
     BookPage5Component,
     TableBooksComponent,
-    BookChartComponent,
-    DialogContent
+    BookDialogComponent,
+    DialogContent,
+    BookChartComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +41,8 @@ import { BookChartComponent, DialogContent } from './book-chart/book-chart.compo
     MatTableModule,
     MatCardModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
+    MatIconModule
   ],
 })
 export class BookModule { }

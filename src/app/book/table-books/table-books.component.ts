@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
