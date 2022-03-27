@@ -1,8 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, DoCheck } from '@angular/core';
-import {
-  Chart,
-  registerables
-} from 'chart.js';
+import Chart from 'chart.js/auto';
 import { map } from 'rxjs';
 import { bookSet1, bookSet2 } from '../../books';
 import { BooksService } from '../../books.service';
@@ -24,9 +21,7 @@ export class BookChartComponent implements OnInit, DoCheck {
   quantity: number[] = [];
   isRender: boolean = false;
 
-  constructor(private booksService: BooksService) {
-    Chart.register(...registerables);
-  }
+  constructor(private booksService: BooksService) {  }
 
   getBooks(): void {
     this.booksService.getSet1().pipe(
