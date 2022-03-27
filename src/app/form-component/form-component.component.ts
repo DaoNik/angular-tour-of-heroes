@@ -16,7 +16,7 @@ export class FormComponentComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   skillCtrl = new FormControl('', [Validators.pattern('[а-яёА-ЯЁ -]*')]);
   filteredSkills: Observable<string[]>;
-  example: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект'];
+  basicStringsArr: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект'];
   skills: FormControl[] = [new FormControl('Жизнерадостность'), new FormControl('Заинтересованность'), new FormControl('Интеллект')];
   allSkills: string[] = ['Жизнерадостность', 'Заинтересованность', 'Интеллект', 'Гуглеж', 'Коммуникативность', 'Упорство'];
 
@@ -87,7 +87,7 @@ export class FormComponentComponent {
     while (this.newSkills.controls.length < 3) {
       this.newSkills.push(this.fb.control(''));
     }
-    this.newSkills.patchValue(this.example);
+    this.newSkills.patchValue(this.basicStringsArr);
 
     this.skillInput.nativeElement.value = '';
   }
