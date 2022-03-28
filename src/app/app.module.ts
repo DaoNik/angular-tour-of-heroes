@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -29,6 +29,7 @@ import { TextModificatorDirective } from './directives/text-modificator.directiv
 import { TextModificatorHostDirective } from './directives/text-modificator-host.directive';
 import { RainbowTextDirective } from './directives/rainbow-text.directive';
 import { FormComponentComponent } from './form-component/form-component.component';
+import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,13 @@ import { FormComponentComponent } from './form-component/form-component.componen
     MatInputModule,
     MatAutocompleteModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: BasicInterceptorInterceptor
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
