@@ -76,11 +76,11 @@ import { FakeBackendInterceptor } from './_helpers/fake-backend.interceptor';
       multi: true,
       useClass: BasicInterceptorInterceptor
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: FakeBackendInterceptor,
-      multi: true
-    }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: FakeBackendInterceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })

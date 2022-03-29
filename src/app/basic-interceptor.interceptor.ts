@@ -13,12 +13,13 @@ export class BasicInterceptorInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (localStorage.getItem('user')) {}
     request.clone({
       setHeaders: {
-        header: 'new header',
+        authorization: `Basic ${window.btoa("HelloWb:admin")}`,
       }
     })
-    console.log('Оно работает');
+    console.log('Оно работает', request.headers);
     return next.handle(request);
   }
 }

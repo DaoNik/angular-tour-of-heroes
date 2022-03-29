@@ -9,18 +9,21 @@ import {bookDataSet1, bookDataSet2} from './books';
   providedIn: 'root'
 })
 export class BooksService {
-  private set1Url = 'http://localhost:4200/api/';
+  private booksUrl = 'http://localhost:4500/books';
 
   httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+    headers: new HttpHeaders(
+      { 'Content-Type': 'application/json',
+        'Authorization': JSON.stringify(localStorage.getItem('user'))
     })
   }
+
+
 
   constructor(private http: HttpClient) { }
 
   getSet1(): Observable<bookDataSet1> {
-    return this.http.get<bookDataSet1>(this.set1Url + 'books.json')
+    return this.http.get<bookDataSet1>(this.booksUrl, this.httpOptions)
       .pipe(
         tap(_ => console.log('fetched set1')),
         // catchError(this.handleError<bookDataSet1>('getSet1', {}))
@@ -28,7 +31,7 @@ export class BooksService {
   }
 
   getSet2(): Observable<bookDataSet2> {
-    return this.http.get<bookDataSet2>(this.set1Url + 'books.json')
+    return this.http.get<bookDataSet2>(this.booksUrl, this.httpOptions)
       .pipe(
         tap(_ => console.log('fetched set2')),
         // catchError(this.handleError<bookDataSet2>('getSet1', {}))

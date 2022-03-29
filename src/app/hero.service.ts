@@ -16,17 +16,20 @@ export class HeroService {
     this.messageService.add(`HeroService: ${message}`)
   }
 
-  private heroesUrl = 'http://localhost:4200/api/heroes.json';
+  private heroesUrl = 'http://localhost:4500/heroes';
+
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json'
-   })
+    headers: new HttpHeaders(
+      { 'Content-Type': 'application/json',
+        'Authorization': JSON.stringify(localStorage.getItem('user'))
+    })
   }
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
   getHeroes(): Observable<Heroes> {
-    return this.http.get<Heroes>(this.heroesUrl)
+    return this.http.get<Heroes>(this.heroesUrl, this.httpOptions)
       .pipe(
         tap(_ => this.log('fetched heroes')),
         // catchError(this.handleError<Heroes>('getHeroes', []))
