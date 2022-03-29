@@ -19,7 +19,6 @@ export class BasicInterceptorInterceptor implements HttpInterceptor {
         authorization: `Basic ${window.btoa("HelloWb:admin")}`,
       }
     })
-    console.log('Оно работает', request.headers);
     return next.handle(request);
   }
 }

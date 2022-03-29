@@ -1,16 +1,19 @@
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const express = require("express");
-const heroes = require("./jsons/heroes.json");
-const books = require("./jsons/books.json");
-const auth = require("./middleware/auth");
+const { errors } = require("celebrate");
+const routes = require("./routes");
+const { requestLogger, errorLogger } = require("./middleware/logger");
 
-const PORT = 4500;
+const { PORT = 4500 } = process.env;
 
 const app = express();
 
 app.use(bodyParser.json());
 
 const allowedCors = ["http://localhost:4200"];
+
+app.use(requestLogger);
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -41,30 +44,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello");
-});
+app.use(routes);
 
-app.post("/users/authenticate", (req, res, next) => {
-  const { username, password } = req.body;
-  const user = { username: "HelloWb", password: "admin" };
-  console.log(username, password);
-  if (username === user.username && password === user.password) {
-    res.send(user);
-  } else {
-    next(new Error("Неверные данные"));
-  }
-});
+app.use(errorLogger);
 
-app.use(auth);
-
-app.get("/heroes", (req, res) => {
-  res.send(heroes);
-});
-
-app.get("/books", (req, res) => {
-  res.send(books);
-});
+app.use(errors());
 
 app.listen(PORT, () => {
   console.log(`App has been started port ${PORT}`);

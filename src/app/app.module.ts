@@ -71,11 +71,11 @@ import { FakeBackendInterceptor } from './_helpers/fake-backend.interceptor';
     MatAutocompleteModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      multi: true,
-      useClass: BasicInterceptorInterceptor
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   multi: true,
+    //   useClass: BasicInterceptorInterceptor
+    // },
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: FakeBackendInterceptor,

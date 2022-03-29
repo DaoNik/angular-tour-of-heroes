@@ -28,7 +28,6 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return this.http.post<any>('http://localhost:4500/users/authenticate', {username, password}).pipe(
       map(user => {
-        console.log(user);
         user.authdata = window.btoa(username + ":" + password);
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
