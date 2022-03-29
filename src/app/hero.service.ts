@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Hero } from './hero';
+import { Hero, Heroes } from './hero';
 import { MessageService } from './message.service';
 import { JsonPipe } from '@angular/common';
 
@@ -16,7 +16,7 @@ export class HeroService {
     this.messageService.add(`HeroService: ${message}`)
   }
 
-  private heroesUrl = 'api/heroes';
+  private heroesUrl = 'http://localhost:4200/api/heroes.json';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'
@@ -25,11 +25,11 @@ export class HeroService {
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
+  getHeroes(): Observable<Heroes> {
+    return this.http.get<Heroes>(this.heroesUrl)
       .pipe(
         tap(_ => this.log('fetched heroes')),
-        catchError(this.handleError<Hero[]>('getHeroes', []))
+        // catchError(this.handleError<Heroes>('getHeroes', []))
       )
   }
 

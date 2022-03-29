@@ -56,9 +56,9 @@ import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // ),
     HeroFormModule,
     BookModule,
     MatFormFieldModule,
@@ -68,11 +68,11 @@ import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
     MatAutocompleteModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      multi: true,
-      useClass: BasicInterceptorInterceptor
-    }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   multi: true,
+    //   useClass: BasicInterceptorInterceptor
+    // }
   ],
   bootstrap: [AppComponent]
 })

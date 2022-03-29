@@ -9,8 +9,7 @@ import {bookDataSet1, bookDataSet2} from './books';
   providedIn: 'root'
 })
 export class BooksService {
-  private set1Url = 'api/set1';
-  private set2Url = 'ape/set2';
+  private set1Url = 'http://localhost:4200/api/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,7 +20,7 @@ export class BooksService {
   constructor(private http: HttpClient) { }
 
   getSet1(): Observable<bookDataSet1> {
-    return this.http.get<bookDataSet1>(this.set1Url)
+    return this.http.get<bookDataSet1>(this.set1Url + 'books.json')
       .pipe(
         tap(_ => console.log('fetched set1')),
         // catchError(this.handleError<bookDataSet1>('getSet1', {}))
@@ -29,7 +28,7 @@ export class BooksService {
   }
 
   getSet2(): Observable<bookDataSet2> {
-    return this.http.get<bookDataSet2>(this.set2Url)
+    return this.http.get<bookDataSet2>(this.set1Url + 'books.json')
       .pipe(
         tap(_ => console.log('fetched set2')),
         // catchError(this.handleError<bookDataSet2>('getSet1', {}))

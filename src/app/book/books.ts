@@ -27,3 +27,11 @@ export interface newBookSet extends bookSet1 {
   qtyRelease: number;
 }
 
+export interface books {
+  set1: {
+    data: bookSet1[]
+  },
+  set2: {
+    data: bookSet2[]
+  }
+}

@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { BooksService } from '../books.service';
-import { bookSet1, bookSet2, newBookSet } from '../books';
+import { books, bookSet1, bookSet2, newBookSet } from '../books';
 
 @Component({
   selector: 'app-table-books',
