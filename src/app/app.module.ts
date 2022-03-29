@@ -30,6 +30,7 @@ import { TextModificatorHostDirective } from './directives/text-modificator-host
 import { RainbowTextDirective } from './directives/rainbow-text.directive';
 import { FormComponentComponent } from './form-component/form-component.component';
 import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
     TextModificatorDirective,
     TextModificatorHostDirective,
     RainbowTextDirective,
-    FormComponentComponent
+    FormComponentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -68,11 +70,11 @@ import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
     MatAutocompleteModule
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   multi: true,
-    //   useClass: BasicInterceptorInterceptor
-    // }
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: BasicInterceptorInterceptor
+    }
   ],
   bootstrap: [AppComponent]
 })
