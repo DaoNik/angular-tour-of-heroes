@@ -21,7 +21,8 @@ const routes: Routes = [
   {path: 'book', children: [...bookRoutes], canActivate: [AuthGuard]},
   {path: 'form-component',
   component: FormComponentComponent, canActivate: [AuthGuard]},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: '**', redirectTo: '/dashboard'}
 ]
 
 @NgModule({
