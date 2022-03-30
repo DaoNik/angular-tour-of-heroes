@@ -90,7 +90,7 @@ const updateToken = (req, res, next) => {
       }
 
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-        expiresIn: "2h",
+        expiresIn: "2m",
       });
 
       const date = Math.floor(Date.now() / 1000) + 60 * 60 * 2;
