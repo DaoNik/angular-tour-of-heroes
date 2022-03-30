@@ -5,6 +5,7 @@ const NotFoundError = require("../errors/NotFoundError");
 const {
   login,
   register,
+  updateToken,
   getHeroes,
   getBooks,
 } = require("../controllers/index");
@@ -16,6 +17,8 @@ router.get("/", (req, res) => {
 router.post("/login", login);
 
 router.post("/register", register);
+
+router.post("/update", updateToken);
 
 router.use(auth);
 

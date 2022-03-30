@@ -9,6 +9,7 @@ import { bookRoutes } from './book/book-routing.module';
 import { FormComponentComponent } from './form-component/form-component.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_helpers/auth.guard';
+import { RegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'form-component',
   component: FormComponentComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
   {path: '**', redirectTo: '/dashboard'}
 ]
 

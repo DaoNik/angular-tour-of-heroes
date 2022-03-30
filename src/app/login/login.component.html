@@ -1,6 +1,6 @@
 <div class='form-container'>
-  <h2>Create Account</h2>
-  <p class='small'>Create a free salmanwap account to access all content.</p>
+  <h2>Войти</h2>
+  <p class='small'>Войти для того, чтобы увидеть весь контент</p>
   <form class='form' [formGroup]='form' (ngSubmit)="authorize()">
     <mat-form-field class='expample-full-width' appearance="fill">
       <mat-label>Email</mat-label>
@@ -8,15 +8,11 @@
       <small></small>
     </mat-form-field>
     <mat-form-field class='example-full-width' appearance="fill">
-      <mat-label>Username</mat-label>
-      <input matInput type='text' placeholder="Add your username" formControlName='username'>
-      <small></small>
-    </mat-form-field>
-    <mat-form-field class='example-full-width' appearance="fill">
       <mat-label for=''>Password</mat-label>
       <input matInput type='password' placeholder='Add your password' formControlName='password'>
       <small></small>
     </mat-form-field>
-    <button mat-raised-button color='primary' type='submit' [disabled]='form.invalid || submitted'>Create a free account</button>
+    <button mat-raised-button color='primary' type='submit' [disabled]='form.invalid || submitted'>Войти</button>
+    <p class='capture'>Еще не зарегистрированы? <a routerLink="/register" class='capture__link'>Зарегистрироваться</a></p>
   </form>
 </div>

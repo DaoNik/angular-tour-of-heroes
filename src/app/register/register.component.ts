@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { User } from '../_helpers/User';
 import { AuthenticationService } from '../_helpers/authentication.service';
 
-@Component({ templateUrl: 'login.component.html', styleUrls: ['login.component.scss'] })
-export class LoginComponent implements OnInit {
+@Component({ templateUrl: 'register.component.html', styleUrls: ['register.component.scss'] })
+export class RegisterComponent implements OnInit {
     form!: FormGroup;
     submitted!: boolean;
 
@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
         this.form = new FormGroup({
           email: new FormControl('', [Validators.required, Validators.email]),
           password: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+          username: new FormControl('', [Validators.minLength(2)])
         })
     }
 
@@ -31,11 +32,12 @@ export class LoginComponent implements OnInit {
       const user: User = {
         email: this.form.value.email,
         password: this.form.value.password,
+        username: this.form.value.username
       }
 
-      this.auth.login(user).subscribe(() => {
+      this.auth.register(user).subscribe(() => {
         this.form.reset();
-        this.router.navigate(['dashboard'])
+        this.router.navigate(['login'])
         this.submitted = false;
       },
       () => {

@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'Tour of Heroes';
 
   logout() {
-    localStorage.clear();
+    localStorage.removeItem('myToken');
   }
 
   form = new FormGroup({

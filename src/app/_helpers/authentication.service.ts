@@ -7,22 +7,33 @@ import { User } from './User';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private url: string = 'http://51.250.16.8:4500/login';
+  private url: string = 'http://51.250.16.8:4500/';
 
   constructor(private http: HttpClient) { }
 
   login(user: User): Observable<any> {
-    return this.http.post(this.url, user)
+    return this.http.post(`${this.url}login`, user)
       .pipe(
         tap(this.setToken)
+      )
+  }
+
+  register(user: User): Observable<any> {
+    return this.http.post(`${this.url}register`, user)
+      .pipe(
+        tap(this.setUser)
       )
   }
 
   setToken(response: any) {
     if (response) {
       localStorage.setItem('myToken', response.token);
-    } else {
-      localStorage.clear();
+    }
+  }
+
+  setUser(response: any) {
+    if (response) {
+      localStorage.setItem('user', response)
     }
   }
 

@@ -7,6 +7,7 @@ const AuthorizationError = require("../errors/AuthorizationError");
 const ValidationError = require("../errors/ValidationError");
 
 const { JWT_SECRET = "secret" } = process.env;
+const { SUPER_RANDOM } = process.env;
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
@@ -25,7 +26,24 @@ const login = (req, res, next) => {
         const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
           expiresIn: "2h",
         });
-        return res.status(200).send({ token });
+
+        const refreshToken = jwt.sign(
+          { _key: `${SUPER_RANDOM}${token.slice(-6)}` },
+          JWT_SECRET,
+          {
+            expiresIn: "30d",
+          }
+        );
+
+        User.findByIdAndUpdate(user._id, { refreshToken }, { new: true })
+          .then((user) => {
+            console.log(user);
+          })
+          .catch(next);
+
+        const date = Math.floor(Date.now() / 1000) + 60 * 60 * 2;
+
+        return res.status(200).send({ token, refreshToken, date });
       });
     })
     .catch(next);
@@ -61,6 +79,27 @@ const register = (req, res, next) => {
   });
 };
 
+const updateToken = (req, res, next) => {
+  const { refreshToken } = req.body;
+
+  return User.findOne({ refreshToken })
+    .select("+password")
+    .then((user) => {
+      if (!user) {
+        throw new AuthorizationError("Неправильный токен");
+      }
+
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: "2h",
+      });
+
+      const date = Math.floor(Date.now() / 1000) + 60 * 60 * 2;
+
+      return res.status(200).send({ token, date });
+    })
+    .catch(next);
+};
+
 const getHeroes = (req, res, next) => {
   res.send(heroes);
 };
@@ -72,6 +111,7 @@ const getBooks = (req, res, next) => {
 module.exports = {
   login,
   register,
+  updateToken,
   getHeroes,
   getBooks,
 };

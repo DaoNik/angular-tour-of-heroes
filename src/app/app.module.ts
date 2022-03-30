@@ -31,6 +31,7 @@ import { RainbowTextDirective } from './directives/rainbow-text.directive';
 import { FormComponentComponent } from './form-component/form-component.component';
 import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component'
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { LoginComponent } from './login/login.component';
     TextModificatorHostDirective,
     RainbowTextDirective,
     FormComponentComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

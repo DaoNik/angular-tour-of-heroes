@@ -21,6 +21,9 @@ const userSchema = new Schema({
     required: true,
     select: false,
   },
+  refreshToken: {
+    type: String,
+  },
   avatar: {
     type: String,
     validate: {
