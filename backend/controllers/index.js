@@ -24,7 +24,7 @@ const login = (req, res, next) => {
         }
 
         const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-          expiresIn: "2h",
+          expiresIn: "2m",
         });
 
         const refreshToken = jwt.sign(
