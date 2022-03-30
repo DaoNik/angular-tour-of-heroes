@@ -41,7 +41,7 @@ const login = (req, res, next) => {
           })
           .catch(next);
 
-        const date = Math.floor(Date.now() / 1000) + 60 * 60 * 2;
+        const date = Math.floor(Date.now() / 1000) + 60 * 2;
 
         return res.status(200).send({ token, refreshToken, date });
       });
@@ -93,7 +93,7 @@ const updateToken = (req, res, next) => {
         expiresIn: "2m",
       });
 
-      const date = Math.floor(Date.now() / 1000) + 60 * 60 * 2;
+      const date = Math.floor(Date.now() / 1000) + 60 * 2;
 
       return res.status(200).send({ token, date });
     })
