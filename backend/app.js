@@ -1,6 +1,7 @@
 require("dotenv").config();
-const bodyParser = require("body-parser");
 const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const { errors } = require("celebrate");
 const routes = require("./routes");
 const { requestLogger, errorLogger } = require("./middleware/logger");
@@ -50,6 +51,27 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.listen(PORT, () => {
-  console.log(`App has been started port ${PORT}`);
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+
+  res.status(statusCode).send({
+    message: statusCode === 500 ? "На сервере произошла ошибка" : message,
+  });
 });
+
+async function start() {
+  try {
+    await mongoose.connect("mongodb://localhost:27017/heroesdb", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    app.listen(PORT, () => {
+      console.log(`App has been started port ${PORT}`);
+    });
+  } catch (e) {
+    console.log("Server error", e.message);
+    process.exit(1);
+  }
+}
+
+start();

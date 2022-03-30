@@ -2,13 +2,20 @@ const router = require("express").Router();
 const auth = require("../middleware/auth");
 const NotFoundError = require("../errors/NotFoundError");
 
-const { login, getHeroes, getBooks } = require("../controllers/index");
+const {
+  login,
+  register,
+  getHeroes,
+  getBooks,
+} = require("../controllers/index");
 
 router.get("/", (req, res) => {
   res.send("Hello");
 });
 
-router.post("/signin", login);
+router.post("/login", login);
+
+router.post("/register", register);
 
 router.use(auth);
 
