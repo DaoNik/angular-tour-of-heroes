@@ -1,44 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { Observable, tap } from 'rxjs';
 import { User } from './User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
+  private url: string = 'http://51.250.16.8:4500/login';
 
-  constructor(
-    private router: Router,
-    private http: HttpClient
-  ) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')!))
-    this.user = this.userSubject.asObservable();
+  constructor(private http: HttpClient) { }
+
+  login(user: User): Observable<any> {
+    return this.http.post(this.url, user)
+      .pipe(
+        tap(this.setToken)
+      )
   }
 
-  public get userValue(): User {
-    return this.userSubject.value;
+  setToken(response: any) {
+    if (response) {
+      localStorage.setItem('myToken', response.token);
+    } else {
+      localStorage.clear();
+    }
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>('http://localhost:4500/users/authenticate', {username, password}).pipe(
-      map(user => {
-        user.authdata = window.btoa(username + ":" + password);
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      })
-    )
-  }
-
-  logout() {
-    localStorage.removeItem('user');
-    // this.userSubject.next(null);
-    this.router.navigate(['/login']);
+  get token() {
+    return localStorage.getItem('myToken');
   }
 }

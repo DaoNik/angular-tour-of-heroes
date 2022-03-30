@@ -1,32 +1,22 @@
-<div class="col-md-6 offset-md-3 mt-5">
-  <div class="alert alert-info">
-      Username: HelloWb<br />
-      Password: admin
-  </div>
-  <div class="card">
-      <h4 class="card-header">Angular 9 Basic Authentication Example</h4>
-      <div class="card-body">
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-              <div class="form-group">
-                  <label for="username">Username</label>
-                  <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
-                  <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
-                      <div *ngIf="f['username'].errors['required']">Username is required</div>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
-                  <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-                      <div *ngIf="f['password'].errors['required']">Password is required</div>
-                  </div>
-              </div>
-              <button [disabled]="loading" class="btn btn-primary">
-                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                  Login
-              </button>
-              <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-          </form>
-      </div>
-  </div>
+<div class='form-container'>
+  <h2>Create Account</h2>
+  <p class='small'>Create a free salmanwap account to access all content.</p>
+  <form class='form' [formGroup]='form' (ngSubmit)="authorize()">
+    <mat-form-field class='expample-full-width' appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type='text' placeholder="Add your email" formControlName='email'>
+      <small></small>
+    </mat-form-field>
+    <mat-form-field class='example-full-width' appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput type='text' placeholder="Add your username" formControlName='username'>
+      <small></small>
+    </mat-form-field>
+    <mat-form-field class='example-full-width' appearance="fill">
+      <mat-label for=''>Password</mat-label>
+      <input matInput type='password' placeholder='Add your password' formControlName='password'>
+      <small></small>
+    </mat-form-field>
+    <button mat-raised-button color='primary' type='submit' [disabled]='form.invalid || submitted'>Create a free account</button>
+  </form>
 </div>

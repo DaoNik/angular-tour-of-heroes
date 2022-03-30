@@ -9,6 +9,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AppComponent {
   title = 'Tour of Heroes';
 
+  logout() {
+    localStorage.clear();
+  }
 
   form = new FormGroup({
     temp1: new FormControl(false, Validators.required),

@@ -1,0 +1,36 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.form-container {
+  margin: 20px auto;
+  width: 400px;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(225, 240, 250, 1) 0%,
+    rgba(206, 231, 247, 1) 44%,
+    rgba(185, 220, 243, 1) 63%,
+    rgba(167, 211, 240, 1) 85%,
+    rgba(144, 200, 236, 1) 100%
+  );
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 2px 2px 4px;
+}
+
+h2,
+.small {
+  text-align: center;
+}
+
+.small {
+  text-shadow: 0.6px 0 0.6px #000, 0 0.6px 0.6px #000, -0.6px 0 0.6px #000,
+    0 -1px 1px #000;
+}
+
+.h2 {
+  font-weight: bold;
+}

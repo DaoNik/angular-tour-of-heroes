@@ -9,16 +9,11 @@ import {bookDataSet1, bookDataSet2} from './books';
   providedIn: 'root'
 })
 export class BooksService {
-  private booksUrl = 'http://localhost:4500/books';
+  private booksUrl = 'http://51.250.16.8:4500/books';
 
   httpOptions = {
-    headers: new HttpHeaders(
-      { 'Content-Type': 'application/json',
-        'Authorization': JSON.stringify(localStorage.getItem('user'))
-    })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   }
-
-
 
   constructor(private http: HttpClient) { }
 

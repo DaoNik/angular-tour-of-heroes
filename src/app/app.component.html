@@ -1,11 +1,12 @@
 <h1 appRainbowText appTextModificator>{{title | fenceCase}}</h1>
 <nav>
-  <a appTextModificator routerLink="/dashboard">{{'Dashboard  to    hell' | fenceCase}}</a>
-  <a appTextModificator routerLink='/heroes'>Heroes</a>
-  <a appTextModificatorHost routerLink='/form'>Form</a>
-  <a appTextModificatorHost routerLink='/focus'>Focus</a>
-  <a appTextModificatorHost routerLink='/book'>Book</a>
-  <a appTextModificator routerLink='/form-component'>Form-component</a>
+  <a routerLink="/dashboard">{{'Dashboard  to    hell' | fenceCase}}</a>
+  <a routerLink='/heroes'>Heroes</a>
+  <a routerLink='/form'>Form</a>
+  <a routerLink='/focus'>Focus</a>
+  <a routerLink='/book'>Book</a>
+  <a routerLink='/form-component'>Form-component</a>
+  <a routerLink="/login" class='logout-link' (click)="logout()">Logout</a>
 </nav>
 <router-outlet></router-outlet>
 <app-messages></app-messages>

@@ -13,6 +13,14 @@ nav {
     border-radius: 4px;
   }
 
+  .logout-link {
+    background-color: rgb(224, 9, 9);
+  }
+
+  .logout-link:hover {
+    background-color: red;
+  }
+
   a:hover {
     color: white;
     background-color: #42545c;

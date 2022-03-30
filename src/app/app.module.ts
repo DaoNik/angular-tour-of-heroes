@@ -31,7 +31,6 @@ import { RainbowTextDirective } from './directives/rainbow-text.directive';
 import { FormComponentComponent } from './form-component/form-component.component';
 import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
 import { LoginComponent } from './login/login.component';
-import { FakeBackendInterceptor } from './_helpers/fake-backend.interceptor';
 
 @NgModule({
   declarations: [
@@ -71,16 +70,11 @@ import { FakeBackendInterceptor } from './_helpers/fake-backend.interceptor';
     MatAutocompleteModule
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   multi: true,
-    //   useClass: BasicInterceptorInterceptor
-    // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: FakeBackendInterceptor,
-    //   multi: true
-    // }
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: BasicInterceptorInterceptor
+    },
   ],
   bootstrap: [AppComponent]
 })

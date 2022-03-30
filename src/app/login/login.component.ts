@@ -1,61 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { User } from '../_helpers/User';
 import { AuthenticationService } from '../_helpers/authentication.service';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({ templateUrl: 'login.component.html', styleUrls: ['login.component.scss'] })
 export class LoginComponent implements OnInit {
-    loginForm!: FormGroup;
-    loading = false;
-    submitted = false;
-    returnUrl: string = '';
-    error = '';
+    form!: FormGroup;
+    submitted!: boolean;
 
     constructor(
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private authenticationService: AuthenticationService
-    ) {
-        // redirect to home if already logged in
-        if (this.authenticationService.userValue) {
-            this.router.navigate(['/dashboard']);
-        }
-    }
+        public auth: AuthenticationService,
+        private router: Router
+    ) { }
 
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
-
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+        this.form = new FormGroup({
+          email: new FormControl('', [Validators.required, Validators.email]),
+          password: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+          username: new FormControl('', [Validators.minLength(2)])
+        })
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
+    authorize() {
+      if (this.form.invalid) {
+        return;
+      }
 
-    onSubmit() {
-        this.submitted = true;
+      this.submitted = true;
 
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
+      const user: User = {
+        email: this.form.value.email,
+        password: this.form.value.password,
+        username: this.form.value.username
+      }
 
-        this.loading = true;
-        this.authenticationService.login(this.f['username'].value, this.f['password'].value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.router.navigate([this.returnUrl]);
-                },
-                error => {
-                    this.error = error;
-                    this.loading = false;
-                });
+      this.auth.login(user).subscribe(() => {
+        this.form.reset();
+        this.router.navigate(['dashboard'])
+        this.submitted = false;
+      },
+      () => {
+        this.submitted = false;
+      })
     }
 }
