@@ -23,7 +23,11 @@ export class BasicInterceptorInterceptor implements HttpInterceptor {
       })
       return next.handle(authReq).pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 401) {
+          if (error.status === 401 && !localStorage.getItem('myRefreshToken')) {
+            console.log('401 и нет рефреш токена')
+            this.auth.logout();
+            this.router.navigate(['/login']);
+          } else if (error.status === 401) {
             this.auth.logout();
 
             return this.auth.refreshToken(localStorage.getItem('myRefreshToken')!).pipe(
