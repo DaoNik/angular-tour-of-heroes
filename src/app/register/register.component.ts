@@ -3,11 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../_helpers/User';
 import { AuthenticationService } from '../_helpers/authentication.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({ templateUrl: 'register.component.html', styleUrls: ['register.component.scss'] })
 export class RegisterComponent implements OnInit {
     form!: FormGroup;
     submitted!: boolean;
+    errMessage: string = '';
 
     constructor(
         public auth: AuthenticationService,
@@ -35,12 +38,15 @@ export class RegisterComponent implements OnInit {
         username: this.form.value.username
       }
 
-      this.auth.register(user).subscribe(() => {
+      this.auth.register(user).pipe(
+        catchError((err) => {
+          this.auth.logout();
+          this.errMessage = err.error.message;
+          return of(err);
+        })
+      ).subscribe(() => {
         this.form.reset();
         this.router.navigate(['login'])
-        this.submitted = false;
-      },
-      () => {
         this.submitted = false;
       })
     }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from './_helpers/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AppComponent {
   title = 'Tour of Heroes';
 
+  constructor(private auth: AuthenticationService) {}
+
   logout() {
-    localStorage.removeItem('myToken');
+    this.auth.logout();
   }
 
   form = new FormGroup({

@@ -12,6 +12,7 @@
       <input matInput type='password' placeholder='Add your password' formControlName='password'>
       <small></small>
     </mat-form-field>
+    <mat-error *ngIf='errMessage'>{{ errMessage }}</mat-error>
     <button mat-raised-button color='primary' type='submit' [disabled]='form.invalid || submitted'>Войти</button>
     <p class='capture'>Еще не зарегистрированы? <a routerLink="/register" class='capture__link'>Зарегистрироваться</a></p>
   </form>

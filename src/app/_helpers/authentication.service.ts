@@ -26,6 +26,7 @@ export class AuthenticationService {
   }
 
   refreshToken(token: string): Observable<any> {
+    console.log('Запрос на обновление токена', token);
     return this.http.post(`${this.url}update`, token)
       .pipe(
         tap(this.setToken)
@@ -35,7 +36,8 @@ export class AuthenticationService {
   setToken(response: any) {
     if (response) {
       console.log(response);
-      const expiresDate = new Date(new Date().getTime() + 1000 * 60 * 2);
+      const twoMinutes = 1000 * 60 * 2;
+      const expiresDate = new Date(new Date().getTime() + twoMinutes);
       localStorage.setItem('myToken', response.token);
       localStorage.setItem('date', expiresDate.toString());
       if (response.refreshToken) {
@@ -50,11 +52,14 @@ export class AuthenticationService {
     }
   }
 
+  logout() {
+    localStorage.removeItem('myToken');
+    localStorage.removeItem('myRefreshToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('date');
+  }
+
   get token() {
-    if (new Date() > new Date(localStorage.getItem('date')!)) {
-      this.refreshToken(localStorage.getItem('myRefreshToken')!)
-        .subscribe(() => console.log('Token update'))
-    }
     return localStorage.getItem('myToken');
   }
 }
