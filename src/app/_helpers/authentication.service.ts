@@ -25,9 +25,22 @@ export class AuthenticationService {
       )
   }
 
+  refreshToken(token: string): Observable<any> {
+    return this.http.post(`${this.url}update`, token)
+      .pipe(
+        tap(this.setToken)
+      )
+  }
+
   setToken(response: any) {
     if (response) {
+      console.log(response);
+      const expiresDate = new Date(new Date().getTime() + 1000 * 60 * 2);
       localStorage.setItem('myToken', response.token);
+      localStorage.setItem('date', expiresDate.toString());
+      if (response.refreshToken) {
+        localStorage.setItem('myRefreshToken', response.refreshToken)
+      }
     }
   }
 
@@ -38,6 +51,10 @@ export class AuthenticationService {
   }
 
   get token() {
+    if (new Date() > new Date(localStorage.getItem('date')!)) {
+      this.refreshToken(localStorage.getItem('myRefreshToken')!)
+        .subscribe(() => console.log('Token update'))
+    }
     return localStorage.getItem('myToken');
   }
 }
