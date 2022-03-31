@@ -16,11 +16,11 @@ const login = (req, res, next) => {
     .select("+password")
     .then((user) => {
       if (!user) {
-        throw new AuthorizationError("Неправильная почта");
+        throw new AuthorizationError("Invalid email");
       }
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          throw new AuthorizationError("Неправильный пароль");
+          throw new AuthorizationError("Invalid password");
         }
 
         const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
@@ -64,9 +64,9 @@ const register = (req, res, next) => {
       })
       .catch((err) => {
         if (err.name === "ValidationError") {
-          next(new ValidationError("Неверно введены данные для пользователя"));
+          next(new ValidationError("Invalid data for user"));
         } else if (err.name === "MongoServerError" && err.code === 11000) {
-          const error = new Error("Данный пользователь уже зарегистрирован");
+          const error = new Error("Current user is already registered");
           error.statusCode = 409;
 
           next(error);
@@ -84,7 +84,7 @@ const updateToken = (req, res, next) => {
     .select("+password")
     .then((user) => {
       if (!user) {
-        throw new AuthorizationError("Неправильный токен");
+        throw new AuthorizationError("Invalid token");
       }
 
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
