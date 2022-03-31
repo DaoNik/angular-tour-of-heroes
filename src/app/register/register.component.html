@@ -1,6 +1,6 @@
 <div class='form-container'>
-  <h2>Зарегистрироваться</h2>
-  <p class='small'>Зарегистрируйтесь, чтобы получить полный доступ к контенту.</p>
+  <h2>Create Account</h2>
+  <p class='small'>Create a free salmanwap account to access all content.</p>
   <form class='form' [formGroup]='form' (ngSubmit)="authorize()">
     <mat-form-field class='expample-full-width' appearance="fill">
       <mat-label>Email</mat-label>
@@ -19,6 +19,6 @@
     </mat-form-field>
     <mat-error *ngIf='errMessage'>{{ errMessage }}</mat-error>
     <button mat-raised-button color='primary' type='submit' [disabled]='form.invalid || submitted'>Create a free account</button>
-    <p class='capture'>Уже зарегистрированы? <a routerLink="/login" class='capture__link'>Войти</a></p>
+    <p class='capture'>Are you already registered? <a routerLink="/login" class='capture__link'>Log in</a></p>
   </form>
 </div>

@@ -1,6 +1,5 @@
 <div class='form-container'>
-  <h2>Войти</h2>
-  <p class='small'>Войти для того, чтобы увидеть весь контент</p>
+  <h2>Log in</h2>
   <form class='form' [formGroup]='form' (ngSubmit)="authorize()">
     <mat-form-field class='expample-full-width' appearance="fill">
       <mat-label>Email</mat-label>
@@ -13,7 +12,7 @@
       <small></small>
     </mat-form-field>
     <mat-error *ngIf='errMessage'>{{ errMessage }}</mat-error>
-    <button mat-raised-button color='primary' type='submit' [disabled]='form.invalid || submitted'>Войти</button>
-    <p class='capture'>Еще не зарегистрированы? <a routerLink="/register" class='capture__link'>Зарегистрироваться</a></p>
+    <button mat-raised-button color='primary' type='submit' [disabled]='form.invalid || submitted'>Log in</button>
+    <p class='capture'>Aren't you registered yet? <a routerLink="/register" class='capture__link'>Register</a></p>
   </form>
 </div>
