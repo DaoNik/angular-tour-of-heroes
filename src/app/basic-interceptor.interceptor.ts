@@ -12,48 +12,42 @@ import { AuthenticationService } from './_helpers/authentication.service';
 
 @Injectable()
 export class BasicInterceptorInterceptor implements HttpInterceptor {
-
+  isRefreshing = false;
   constructor(private router: Router, private auth: AuthenticationService) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const newReq = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${localStorage.getItem('myToken')}`)
+    });
 
-    if (localStorage.getItem('myToken')) {
-      const authReq = request.clone({
-        headers: request.headers.set('Authorization', `Bearer ${localStorage.getItem('myToken')}`),
-      })
-      return next.handle(authReq).pipe(
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 401 && !localStorage.getItem('myRefreshToken')) {
-            console.log('401 и нет рефреш токена')
-            this.auth.logout();
-            this.router.navigate(['/login']);
-          } else if (error.status === 401) {
-            this.auth.logout();
-
-            return this.auth.refreshToken(localStorage.getItem('myRefreshToken')!).pipe(
-              switchMap((res) => {
+    return next.handle(newReq)
+    .pipe(
+      catchError((err) => {
+        if (err.status === 401 && !this.isRefreshing) {
+          this.isRefreshing = true;
+          return this.auth.refreshToken(localStorage.getItem('myRefreshToken')!)
+            .pipe(
+              switchMap((res: any) => {
                 localStorage.setItem('myToken', res.token);
-
                 return next.handle(
-                  request.clone({
-                    headers: request.headers.set(
-                      'Authorization', `Bearer ${res.token}`
-                    ),
+                  req.clone({
+                    headers: req.headers.set('Authorization', `Bearer ${res.token}`),
                   })
-                )
+                );
               }),
               catchError((err) => {
                 this.auth.logout();
-
-                return throwError(() => new Error(`Interceptor Error: ${err.message}`));
+                return throwError(() => err);
               })
-            )
-          }
+            );
+        }
+        if (err.status === 401) {
+          this.auth.logout();
+          this.router.navigate(['login'])
+        }
 
-          return throwError(() => new Error(`Interceptor Error: ${error.message}`))
-        })
-      )
-    }
-    return next.handle(request);
+        return throwError(() => err);
+      })
+    );
   }
 }

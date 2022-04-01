@@ -16,7 +16,7 @@ export class HeroService {
     this.messageService.add(`HeroService: ${message}`)
   }
 
-  private heroesUrl = 'http://51.250.16.8:4500/heroes';
+  private heroesUrl = 'http://localhost:4500/heroes.json';
 
 
   httpOptions = {

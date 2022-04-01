@@ -7,7 +7,7 @@ import { User } from './User';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private url: string = 'http://51.250.16.8:4500/';
+  private url: string = 'http://localhost:4500/';
 
   constructor(private http: HttpClient) { }
 
@@ -27,7 +27,7 @@ export class AuthenticationService {
 
   refreshToken(token: string): Observable<any> {
     console.log('Запрос на обновление токена', token);
-    return this.http.post(`${this.url}update`, token)
+    return this.http.post(`${this.url}update`, { refreshToken: token})
       .pipe(
         tap(this.setToken)
       )
@@ -36,12 +36,12 @@ export class AuthenticationService {
   setToken(response: any) {
     if (response) {
       console.log(response);
-      const twoMinutes = 1000 * 60 * 2;
-      const expiresDate = new Date(new Date().getTime() + twoMinutes);
+      const oneMinutes = 1000 * 60;
+      const expiresDate = new Date(new Date().getTime() + oneMinutes);
       localStorage.setItem('myToken', response.token);
       localStorage.setItem('date', expiresDate.toString());
       if (response.refreshToken) {
-        localStorage.setItem('myRefreshToken', response.refreshToken)
+        localStorage.setItem('refreshToken', response.refreshToken)
       }
     }
   }
@@ -54,7 +54,7 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('myToken');
-    localStorage.removeItem('myRefreshToken');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
     localStorage.removeItem('date');
   }

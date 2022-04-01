@@ -83,7 +83,7 @@ const updateToken = (req, res, next) => {
   return User.findOne({ refreshToken })
     .select("+password")
     .then((user) => {
-      if (!user) {
+      if (!user || !refreshToken) {
         throw new AuthorizationError("Invalid token");
       }
 
