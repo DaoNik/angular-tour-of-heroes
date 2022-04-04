@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from './User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private url: string = 'http://localhost:4500/';
+  private url: string = 'http://51.250.16.8:4500/';
 
   constructor(private http: HttpClient) { }
 
   login(user: User): Observable<any> {
     return this.http.post(`${this.url}login`, user)
       .pipe(
-        tap(this.setToken)
+        tap(this.setToken),
+        catchError(error => {
+          console.log('Error: ', error.message);
+          return throwError(() => error);
+        })
       )
   }
 
@@ -35,7 +39,6 @@ export class AuthenticationService {
 
   setToken(response: any) {
     if (response) {
-      console.log(response);
       const oneMinutes = 1000 * 60;
       const expiresDate = new Date(new Date().getTime() + oneMinutes);
       localStorage.setItem('myToken', response.token);
@@ -57,9 +60,5 @@ export class AuthenticationService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
     localStorage.removeItem('date');
-  }
-
-  get token() {
-    return localStorage.getItem('myToken');
   }
 }

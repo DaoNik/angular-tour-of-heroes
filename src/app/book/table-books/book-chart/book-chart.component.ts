@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, DoCheck } from '@angular/core
 import Chart from 'chart.js/auto';
 import { map } from 'rxjs';
 import { bookSet1, bookSet2 } from '../../books';
-import { BooksService } from '../../books.service';
+import { BooksService } from '../../book.service';
 
 
 @Component({

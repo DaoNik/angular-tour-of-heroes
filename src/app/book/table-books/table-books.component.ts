@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { BooksService } from '../books.service';
+import { BooksService } from '../book.service';
 import { books, bookSet1, bookSet2, newBookSet } from '../books';
 
 @Component({
@@ -46,7 +46,10 @@ export class TableBooksComponent implements OnInit {
         }
         return newSetBooks;
       })
-    ).subscribe(books => this.newSetBooks = books)
+    ).subscribe(books => {
+      this.newSetBooks = books
+      console.log(this.newSetBooks);
+    })
   }
 
   getHeaderContent(column: string) {

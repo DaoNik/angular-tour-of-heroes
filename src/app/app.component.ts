@@ -10,6 +10,7 @@ import { AuthenticationService } from './_helpers/authentication.service';
 })
 export class AppComponent {
   title = 'Tour of Heroes';
+  timeLife = 60 * 1000;
 
   constructor(private router: Router, private auth: AuthenticationService) {}
 
@@ -24,20 +25,19 @@ export class AppComponent {
     setInterval(() => {
       this.auth.refreshToken(localStorage.getItem('refreshToken')!)
       .subscribe()
-    }, 60 * 1000)
+    }, this.timeLife)
   }
 
   updateAfterOut() {
     if (localStorage.getItem('refreshToken')) {
       this.auth.refreshToken(localStorage.getItem('refreshToken')!)
         .subscribe()
-    } else {
-      this.router.navigate(['login'])
     }
   }
 
   logout() {
     this.auth.logout();
+    this.router.navigate(['login']);
   }
 
   form = new FormGroup({

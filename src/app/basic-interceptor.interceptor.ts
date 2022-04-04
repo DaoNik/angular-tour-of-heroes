@@ -12,7 +12,6 @@ import { AuthenticationService } from './_helpers/authentication.service';
 
 @Injectable()
 export class BasicInterceptorInterceptor implements HttpInterceptor {
-  isRefreshing = false;
   constructor(private router: Router, private auth: AuthenticationService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,30 +21,11 @@ export class BasicInterceptorInterceptor implements HttpInterceptor {
 
     return next.handle(newReq)
     .pipe(
-      catchError((err) => {
-        if (err.status === 401 && !this.isRefreshing) {
-          this.isRefreshing = true;
-          return this.auth.refreshToken(localStorage.getItem('myRefreshToken')!)
-            .pipe(
-              switchMap((res: any) => {
-                localStorage.setItem('myToken', res.token);
-                return next.handle(
-                  req.clone({
-                    headers: req.headers.set('Authorization', `Bearer ${res.token}`),
-                  })
-                );
-              }),
-              catchError((err) => {
-                this.auth.logout();
-                return throwError(() => err);
-              })
-            );
-        }
+      catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
           this.auth.logout();
-          this.router.navigate(['login'])
+          this.router.navigateByUrl('/login');
         }
-
         return throwError(() => err);
       })
     );
