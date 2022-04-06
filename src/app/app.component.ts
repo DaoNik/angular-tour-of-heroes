@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './_helpers/authentication.service';
+import {HeroService} from "./hero.service";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   title = 'Tour of Heroes';
   timeLife = 60 * 1000;
 
-  constructor(private router: Router, private auth: AuthenticationService) {}
+  constructor(private router: Router, private auth: AuthenticationService, public heroService: HeroService) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('refreshToken')) {

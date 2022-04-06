@@ -8,10 +8,9 @@ import { Hero, Heroes } from './hero';
 import { MessageService } from './message.service';
 import { JsonPipe } from '@angular/common';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HeroService {
+  HOSTNAME = window.location.hostname;
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`)
   }
@@ -25,7 +24,7 @@ export class HeroService {
     })
   }
 
-  constructor(private http: HttpClient, private messageService: MessageService) { }
+  constructor(private http: HttpClient, private messageService: MessageService) {}
 
   getHeroes(): Observable<Heroes> {
     return this.http.get<Heroes>(this.heroesUrl, this.httpOptions)

@@ -39,11 +39,11 @@ export class AuthenticationService {
 
   setToken(response: any) {
     if (response) {
-      const oneMinutes = 1000 * 60;
-      const expiresDate = new Date(new Date().getTime() + oneMinutes);
+      const oneMinute = 1000 * 60;
+      const expiresDate = new Date(new Date().getTime() + oneMinute);
       localStorage.setItem('myToken', response.token);
       localStorage.setItem('date', expiresDate.toString());
-      if (response.refreshToken) {
+      if (response.refreshToken != null) {
         localStorage.setItem('refreshToken', response.refreshToken)
       }
     }

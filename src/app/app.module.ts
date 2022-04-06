@@ -32,6 +32,7 @@ import { FormComponentComponent } from './form-component/form-component.componen
 import { BasicInterceptorInterceptor } from './basic-interceptor.interceptor';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component'
+import {HeroService} from "./hero.service";
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { RegisterComponent } from './register/register.component'
       multi: true,
       useClass: BasicInterceptorInterceptor
     },
+    HeroService
   ],
   bootstrap: [AppComponent]
 })

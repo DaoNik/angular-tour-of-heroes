@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../_helpers/User';
 import { AuthenticationService } from '../_helpers/authentication.service';
-import { catchError, of } from 'rxjs';
+import {catchError, of, throwError} from 'rxjs';
 
 @Component({ templateUrl: 'login.component.html', styleUrls: ['login.component.scss'] })
 export class LoginComponent implements OnInit {
@@ -39,11 +39,11 @@ export class LoginComponent implements OnInit {
         catchError((err) => {
           this.auth.logout();
           this.errMessage = err.error.message;
-          return of(err);
+          return throwError(() => err);
         })
       ).subscribe(() => {
         this.router.navigate(['dashboard'])
         this.submitted = false;
-      })
+      }, () => this.submitted = false)
     }
 }

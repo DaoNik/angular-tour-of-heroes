@@ -11,8 +11,9 @@ import { Hero } from '../hero';
 })
 export class HeroesComponent implements OnInit {
   heroes: Hero[] = [];
+  hostname: string = '';
 
-  constructor(private heroService: HeroService) { }
+  constructor(public heroService: HeroService) {}
 
   ngOnInit(): void {
     this.getHeroes()
