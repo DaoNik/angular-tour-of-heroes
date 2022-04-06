@@ -10,7 +10,7 @@ import { JsonPipe } from '@angular/common';
 
 @Injectable()
 export class HeroService {
-  HOSTNAME = window.location.hostname;
+  HOSTNAME = `${window.location.protocol}//${window.location.hostname}`;
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`)
   }
