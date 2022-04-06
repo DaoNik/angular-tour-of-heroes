@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './_helpers/authentication.service';
-import {HeroService} from "./hero.service";
+import {HOSTNAME_INFO} from "./hostname.providers";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Tour of Heroes';
   timeLife = 60 * 1000;
 
-  constructor(private router: Router, private auth: AuthenticationService, public heroService: HeroService) {}
+  constructor(
+    private router: Router,
+    private auth: AuthenticationService,
+    @Inject(HOSTNAME_INFO) readonly HOSTNAME: string
+) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('refreshToken')) {
